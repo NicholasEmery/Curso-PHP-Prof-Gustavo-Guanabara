@@ -10,11 +10,14 @@
 <body>
     <main>
         <h1>Trabalhando com Números Aleatórios</h1>
-        <p>Gerando um Número Aleatório entre 0 e 100.</p>
         <?php
-            echo ""
+            // echo ""
+            $min = 0;
+            $max = 100;
+            $num = mt_rand($min, $max);
+            echo "<p>Gerando um Número Aleatório entre $min e $max... <br>O valor gerado foi <strong>$num</strong><p>";
         ?>
-        <button type="submit" name="random">Gerar Outro</button>
+        <button onclick="javascript:document.location.reload()">&#x1F504; Gerar Outro</button>
     </main>
 </body>
 </html>
