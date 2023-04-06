@@ -20,8 +20,16 @@
             $moeda_destino = $_POST['moeda_destino'];
 
             // Realiza a conversão
-            $cotacao_dolar = 5.26; // valor da cotação do dólar em relação ao real
-            $valor_convertido = $valor_reais / $cotacao_dolar;
+
+            $inicio = date("m-d-Y", strtotime("-7 days"));
+            $fim = date("m-d-Y");
+            $url = 'https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial=\'' . $inicio . '\'&@dataFinalCotacao=\'' . $fim . '\'&$top=1&$orderby=dataHoraCotacao%20desc&$format=json&$select=cotacaoCompra,dataHoraCotacao';
+
+            $dados = json_decode(file_get_contents($url), true);
+
+            $cotação = $dados["value"][0]["cotacaoCompra"];
+
+            $valor_convertido = $valor_reais / $cotação;
             $valor_convertido = number_format($valor_convertido, 2, '.', ''); // formata o valor para ter 2 casas decimais
 
             // Exibe o resultado da conversão
